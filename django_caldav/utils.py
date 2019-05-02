@@ -1,5 +1,5 @@
 # coding=utf-8
-from django.utils.encoding import smart_unicode
+from django.utils.encoding import smart_text
 import lxml.builder as lb
 from djangodav import utils
 
@@ -30,7 +30,7 @@ class iCalendar(object):
         """
         Converts vStringLike iCalendar object  (f.e. vText) into unicode string
         """
-        return u"{unicode}".format(unicode=smart_unicode(string_like))
+        return u"{unicode}".format(unicode=smart_text(string_like))
 
     @staticmethod
     def datetime(datetime_like):

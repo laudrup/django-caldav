@@ -1,8 +1,8 @@
 # coding=utf-8
 from datetime import datetime
 import hashlib
-from django.core.urlresolvers import reverse
-from django.utils.encoding import smart_unicode
+from django.urls import reverse
+from django.utils.encoding import smart_text
 from django.http import HttpRequest
 from icalendar import Calendar
 from lxml import etree
@@ -22,7 +22,7 @@ from django_caldav.utils import WebDAV, CalDAV, url_join, CalDAV_MAP, WebDAV_MAP
 class CalDavFeedView(ICalFeed):
     @staticmethod
     def one_event_per_calendar(calendar):
-        calendar = smart_unicode(calendar)
+        calendar = smart_text(calendar)
         events = calendar.split(u"BEGIN:VEVENT")
         header = events[0]
         footer = events[len(events) - 1].split(u"END:VEVENT")[1]
@@ -444,7 +444,7 @@ class CalDavView(DavView):
             if not calendar_query:
                 events = CalDavFeedView.one_event_per_calendar(feed_response)
             else:
-                events = [(calendar_uri, smart_unicode(feed_response))]
+                events = [(calendar_uri, smart_text(feed_response))]
 
             responses.append(
                 WebDAV(
@@ -474,7 +474,7 @@ class CalDavView(DavView):
         return response
 
     def put(self, request, path, xbody=None, *args, **kwargs):
-        calendar = Calendar.from_ical(smart_unicode(self.request_body["plain"]))
+        calendar = Calendar.from_ical(smart_text(self.request_body["plain"]))
         for component in calendar.walk():
             if component.name == "VEVENT":
                 base_item = CalDavEvent()
