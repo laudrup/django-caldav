@@ -1,23 +1,26 @@
 # coding=utf-8
-from datetime import datetime
 import hashlib
-from django.urls import reverse
-from django.utils.encoding import smart_text
-from django.http import HttpRequest
-from icalendar import Calendar
-from lxml import etree
-from django.http import HttpResponseForbidden, HttpResponseNotFound, HttpResponse, HttpResponseBadRequest
+import logging
+from datetime import datetime
+
+from django.http import (HttpRequest, HttpResponse, HttpResponseBadRequest,
+                         HttpResponseForbidden)
 from django.utils.decorators import method_decorator
+from django.utils.encoding import smart_text
 from django.views.decorators.csrf import csrf_exempt
+from django_ical.views import ICalFeed
 from djangodav.responses import HttpResponseMultiStatus
 from djangodav.views import DavView
-from django_ical.views import ICalFeed
+from icalendar import Calendar
+from lxml import etree
+
 from django_caldav.acl import FullAcl
 from django_caldav.lock import DummyLock
 from django_caldav.models import CalDavEvent
 from django_caldav.resources import CalDavResource
-from django_caldav.utils import WebDAV, CalDAV, url_join, CalDAV_MAP, WebDAV_MAP, CalendarServer_MAP, CalendarServer, iCalendar
-import logging
+from django_caldav.utils import (CalDAV, CalDAV_MAP, CalendarServer,
+                                 CalendarServer_MAP, WebDAV, WebDAV_MAP,
+                                 url_join)
 
 logger = logging.getLogger(__name__)
 
