@@ -395,10 +395,9 @@ class CalDavView(DavView):
                 )
                 # TODO <C:schedule-outbox-URL><D:href>/calendar/r/dav/calendar/bgs_demo07@try.lotuslive.com/outbox/</D:href></C:schedule-outbox-URL>
 
-
         responses.append(
             WebDAV.response(
-                WebDAV.href(url_join(self.base_url, "/calendars/{current_user}".format(current_user=current_user_name))),
+                WebDAV.href(url_join(self.base_url, path)),
                 WebDAV.propstat(
                     WebDAV.prop(*properties),
                     WebDAV.status('HTTP/1.1 200 OK'),
