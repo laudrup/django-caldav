@@ -17,6 +17,9 @@ from django_caldav.lock import DummyLock
 from django_caldav.models import CalDavEvent
 from django_caldav.resources import CalDavResource
 from django_caldav.utils import WebDAV, CalDAV, url_join, CalDAV_MAP, WebDAV_MAP, CalendarServer_MAP, CalendarServer, iCalendar
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class CalDavFeedView(ICalFeed):
@@ -99,7 +102,7 @@ class CalDavView(DavView):
             "plain": request.body,
             "xml": self.get_request_body_as_etree_with_ns_map(request)
         }
-        print(self.request_body["plain"])
+        logger.debug(self.request_body["plain"])
         return super(CalDavView, self).dispatch(request, path, *args, **kwargs)
 
     def get_request_body_as_etree_with_ns_map(self, request):
@@ -157,7 +160,7 @@ class CalDavView(DavView):
                 if elements:
                     response_properties.append((known_property, elements))
             except Exception as e:
-                print str(e)
+                logger.exception()
 
         current_user_name = request.user.username
         if not current_user_name:
@@ -401,7 +404,7 @@ class CalDavView(DavView):
         )
         body = WebDAV.multistatus(*responses)
         response = self.build_xml_response(body, HttpResponseMultiStatus)
-        print(response.content)
+        logger.debug(response.content)
         return response
 
     def report(self, request, path, xbody=None, *args, **kwargs):
@@ -470,7 +473,7 @@ class CalDavView(DavView):
         body = WebDAV.multistatus(*responses)
 
         response = self.build_xml_response(body, HttpResponseMultiStatus)
-        print(response.content)
+        logger.debug(response.content)
         return response
 
     def put(self, request, path, xbody=None, *args, **kwargs):
