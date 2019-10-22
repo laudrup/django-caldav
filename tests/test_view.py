@@ -1,9 +1,9 @@
 import unittest
 from unittest.mock import patch
 
-import caldav
 from django.test import RequestFactory, TestCase
 
+import caldav
 from django_caldav.views import CalDavView
 
 

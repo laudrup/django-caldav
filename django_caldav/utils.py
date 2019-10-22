@@ -1,6 +1,6 @@
 # coding=utf-8
-from django.utils.encoding import smart_text
 import lxml.builder as lb
+from django.utils.encoding import smart_text
 from djangodav import utils
 
 WebDAV_NS = utils.WEBDAV_NS

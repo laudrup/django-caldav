@@ -1,6 +1,6 @@
 # coding=utf-8
-from django.utils.timezone import now
-from djangodav.db.resources import NameLookupDBDavMixIn, BaseDBDavResource
+from djangodav.db.resources import BaseDBDavResource, NameLookupDBDavMixIn
+
 from .models import CollectionModel, ObjectModel
 
 
