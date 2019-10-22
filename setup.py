@@ -1,6 +1,5 @@
 #!/bin/env python
-from setuptools import setup, find_packages
-import os 
+from setuptools import setup
 
 setup(
     name='django-caldav',
@@ -8,9 +7,11 @@ setup(
     description='CalDAV implementation for Django offering Feed interface',
     author='Petr Knap',
     author_email='knap@wpj.cz',
-    url = 'http://www.wpj.cz',
+    url='http://www.wpj.cz',
     download_url='',
-    packages=["django_caldav",],
+    packages=[
+        'django_caldav',
+    ],
     include_package_data=True,
     classifiers=[
         'Development Status :: 4 - Beta',
@@ -22,8 +23,8 @@ setup(
         'Programming Language :: Python',
         'Topic :: Office/Business',
     ],
-    zip_safe = False,
-    install_requires = [
+    zip_safe=False,
+    install_requires=[
         'django',
         'django-ical',
         'djangodav>=0.0.1b5',

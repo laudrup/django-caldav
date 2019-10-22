@@ -118,7 +118,7 @@ class CalDavView(DavView):
                 "etree": etree.ElementTree(etree.fromstring(request.body, etree.XMLParser(ns_clean=True))),
                 "namespaces": ns_map
             }
-        except:
+        except etree.ElementTree.ParseError:
             return {
                 "etree": None,
                 "namespaces": None
@@ -148,7 +148,7 @@ class CalDavView(DavView):
             return HttpResponseForbidden()
 
         # TODO fix case: users/{username} -> exist=False
-        #if not self.resource.exists:
+        # if not self.resource.exists:
         #    return HttpResponseNotFound()
 
         if not self.get_access(self.resource):
@@ -158,11 +158,10 @@ class CalDavView(DavView):
 
         for known_property in self.KNOWN_PROPERTIES:
             try:
-                #elements = xbody('/D:propfind/D:prop/{property}'.format(property=known_property))
                 elements = self.get_elements('/D:propfind/D:prop/{property}'.format(property=known_property))
                 if elements:
                     response_properties.append((known_property, elements))
-            except Exception as e:
+            except Exception:
                 logger.exception()
 
         current_user_name = request.user.username
